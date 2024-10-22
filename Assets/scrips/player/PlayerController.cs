@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck; // Un punto bajo el jugador para verificar el suelo
     public float checkRadius = 0.1f; // Radio para detectar el suelo
     public LayerMask groundLayer; // Asigna esto a la capa del suelo
+    public float hitForce = 5f;
+    private bool canMove = true;
 
     // Componentes
     private Rigidbody2D rb;
@@ -77,6 +79,12 @@ public class PlayerController : MonoBehaviour
 
     void UpdateAnimation()
     {
+
+        if(!canMove)
+        {
+            return;
+        }
+
         if (moveInput == 0 && !isJumping)
         {
             animator.SetInteger("anim-state", 0);
@@ -101,4 +109,7 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
     }
+
+
+
 }

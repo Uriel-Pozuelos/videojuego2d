@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -8,10 +10,11 @@ public class PlayerMove : MonoBehaviour
 
     [SerializeField] private float runSpeed;
     [Range(0,0.3f)][SerializeField] private float smoothVelocity;
+    public float hitForce = 5f;
 
     private Vector3 velocity = Vector3.zero;
 
-
+    public bool canMove = true;
     private bool facingRight = true;
 
     [Header("Salto")]
@@ -85,5 +88,32 @@ public class PlayerMove : MonoBehaviour
     {
         facingRight = !facingRight;
         transform.Rotate(0f, 180f, 0f);
+    }
+
+    public void hittingByEnemy()
+    {
+        Vector2 hitDireccion;
+        if (rb.velocity.x > 0)
+        {
+            hitDireccion = new Vector2(-1f, 1f);
+        }
+        else
+        {
+            hitDireccion = new Vector2(1f, 1f);
+        }
+
+        rb.AddForce(hitDireccion * hitForce, ForceMode2D.Impulse);
+        StartCoroutine(WaitAndActiveMovement());
+    }
+
+
+    IEnumerator WaitAndActiveMovement()
+    {
+        yield return new WaitForSeconds(0.1f);
+        while (!isGrounded)
+        {
+            yield return null;
+        }
+        canMove = true;
     }
 }
