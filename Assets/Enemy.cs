@@ -1,40 +1,60 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemigo : MonoBehaviour
 {
     public float cooldownAtaque;
-    public float jumpForce = 10f; // Aumenta la fuerza de salto
+    public bool movimientoInfinito = true; // Activa o desactiva el movimiento aleatorio en X
     private bool puedeAtacar = true;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
+    private Animator animator;
+    private float velocidadMovimiento = 2f;
+    private float direccionMovimiento; // Variable para almacenar la dirección de movimiento
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
-        // Verificamos si el Rigidbody2D está configurado correctamente
         if (rb == null)
         {
             Debug.LogError("No se encontró Rigidbody2D en el enemigo.");
         }
-        else
-        {
-            // Inicia el ciclo de saltos cada 2 segundos
-            InvokeRepeating("Jump", 2f, 2f);
-        }
+
+        // Inicia la corrutina de movimiento infinito
+        StartCoroutine(MovimientoInfinito());
     }
 
-    private void Jump()
+    void Update()
     {
-        if (rb != null)
+       
+            // Establece la velocidad en el eje X en función de la dirección
+            rb.velocity = new Vector2(direccionMovimiento * velocidadMovimiento, rb.velocity.y);
+        
+    }
+
+    private IEnumerator MovimientoInfinito()
+    {
+        while (movimientoInfinito)
         {
-            // Aplica una fuerza hacia arriba para que el enemigo salte
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            Debug.Log("El enemigo ha saltado."); // Log para verificar si el salto ocurre
+            animator.SetInteger("anim-state", 1); // Cambia a animación de "run"
+
+            // Asigna una dirección aleatoria
+            direccionMovimiento = Random.Range(0, 2) == 0 ? -1f : 1f;
+
+            // Cambia la dirección del sprite según el valor de dirección
+            transform.localScale = new Vector3(direccionMovimiento, 1f, 1f);
+
+            // Cambia la dirección cada cierto tiempo aleatorio para hacer el movimiento más dinámico
+            float tiempoCambioDireccion = Random.Range(5f, 8f);
+            yield return new WaitForSeconds(tiempoCambioDireccion);
         }
+
+        // Si se desactiva movimientoInfinito, el enemigo se detiene en estado "idle"
+        rb.velocity = Vector2.zero;
+        animator.SetInteger("anim-state", 0); // Estado "idle"
     }
 
     private void OnCollisionEnter2D(Collision2D other)

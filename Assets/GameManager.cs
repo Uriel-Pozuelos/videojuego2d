@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
     public int TotalLife = 3;
     private int Life = 3;
 
-
     [Header("Game Stats")]
     public HUB hub;
 
@@ -41,6 +40,12 @@ public class GameManager : MonoBehaviour
 
     private int totalCoins = 0;
 
+    [Header("Audio Clips")]
+    public AudioClip sceneSound;      // Sonido para la escena
+    public AudioClip onDeadSound;     // Sonido al perder una vida
+    public AudioClip onCoinSound;     // Sonido al recoger una moneda
+    private AudioSource audioSource;   // Componente de AudioSource para reproducir sonidos
+
     // Asegura que la instancia no se destruya entre escenas
     private void Awake()
     {
@@ -48,6 +53,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            audioSource = gameObject.AddComponent<AudioSource>(); // Añadir AudioSource al GameManager
         }
         else if (instance != this)
         {
@@ -55,9 +61,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        PlaySceneSound(); // Reproducir el sonido de la escena al iniciar
+    }
+
     public void AddCoins(int coins)
     {
         totalCoins += coins;
+        audioSource.PlayOneShot(onCoinSound); // Reproducir el sonido al recoger monedas
         hub.UpdateCoins(totalCoins);
         Debug.Log("Total coins: " + totalCoins);
     }
@@ -66,16 +78,17 @@ public class GameManager : MonoBehaviour
     {
         Life -= 1;
         hub.RestLife(Life);
+        PlayOnDeadSound(); // Reproducir el sonido al perder vida
         if (Life <= 0)
         {
-           Debug.Log("Game Over");
+            Debug.Log("Game Over");
             SceneManager.LoadScene(0);
         }
     }
 
     public void AddLife()
     {
-        if(Life == TotalLife)
+        if (Life == TotalLife)
         {
             return;
         }
@@ -84,6 +97,23 @@ public class GameManager : MonoBehaviour
         {
             hub.AddLife(Life);
             Life += 1;
+        }
+    }
+
+    private void PlaySceneSound()
+    {
+        if (sceneSound != null)
+        {
+            audioSource.clip = sceneSound;
+            audioSource.Play();
+        }
+    }
+
+    private void PlayOnDeadSound()
+    {
+        if (onDeadSound != null)
+        {
+            audioSource.PlayOneShot(onDeadSound);
         }
     }
 }
