@@ -86,6 +86,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void killPlayer()
+    {
+        Life = 0;
+        hub.RestLife(Life);
+        PlayOnDeadSound(); // Reproducir el sonido al perder vida
+        if (Life <= 0)
+        {
+            Debug.Log("Game Over");
+            SceneManager.LoadScene(0);
+        }
+    }
+
     public void AddLife()
     {
         if (Life == TotalLife)
