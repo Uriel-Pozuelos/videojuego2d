@@ -12,11 +12,6 @@ public class disparoEnemigo : MonoBehaviour
 
     private float lastBullet; // Tiempo del último disparo
 
-    void Start()
-    {
-        // No necesitas inicializar jugadorDetectado en Start, así que lo puedes eliminar.
-    }
-
     void Update()
     {
         // Disparar automáticamente en intervalos
@@ -25,14 +20,12 @@ public class disparoEnemigo : MonoBehaviour
             Disparar(); // Dispara
             lastBullet = Time.time; // Actualiza el tiempo del último disparo
         }
-
-        // Si deseas mostrar la detección del jugador, puedes dejarlo aquí.
-        // jugadorDetectado = Physics2D.Raycast(controladorDisparo.position, transform.right, distanciaDisparo, capaJugador);
     }
 
     public void Disparar()
     {
-        Instantiate(bullet, controladorDisparo.position, controladorDisparo.rotation);
+        GameObject newBullet = Instantiate(bullet, controladorDisparo.position, controladorDisparo.rotation);
+        Destroy(newBullet, 2f); // Destruir la bala después de 2 segundos
     }
 
     public void OnDrawGizmos()

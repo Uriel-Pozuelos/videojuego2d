@@ -10,26 +10,34 @@ public class HUB : MonoBehaviour
 
     [Header("Game Objects")]
     public GameObject[] gameObjects;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject[] bullets;
 
     // Update is called once per frame
     void Update()
     {
-     TextMeshProUGUI.   text = "Total coins: " + GameManager.Instance.TotalCoins.ToString();
+        TextMeshProUGUI.text = "Total coins: " + GameManager.Instance.TotalCoins.ToString();
     }
 
     public void UpdateCoins(int coins)
     {
         TextMeshProUGUI.text = "Total coins: " + coins.ToString();
     }
-  
+
+    public void AddBullet(int index)
+    {
+        if (index < 0 || index >= bullets.Length) return; // Asegura que el índice esté en un rango válido
+        bullets[index].SetActive(true);
+    }
+
+    public void RestBullet(int index)
+    {
+        if (index < 0 || index >= bullets.Length) return; // Asegura que el índice esté en un rango válido
+        bullets[index].SetActive(false);
+    }
+
     public void RestLife(int index)
     {
+        if (index < 0 || index >= gameObjects.Length) return; // Validación de rango para evitar errores
         gameObjects[index].SetActive(false);
     }
 
@@ -39,4 +47,3 @@ public class HUB : MonoBehaviour
         gameObjects[index].SetActive(true);
     }
 }
-

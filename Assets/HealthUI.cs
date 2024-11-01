@@ -1,11 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HealthUI : MonoBehaviour
 {
     public GameObject heartPrefab; // Prefab del corazón (Imagen)
     public Transform heartContainer; // Contenedor donde estarán los corazones
-    public int maxHealth = 5; // Máxima cantidad de corazones (vida máxima)
+    public int maxHealth = 3; // Máxima cantidad de corazones (vida máxima)
     private int currentHealth;
 
     void Start()
@@ -17,8 +16,8 @@ public class HealthUI : MonoBehaviour
     // Método para actualizar la UI de corazones
     public void UpdateHearts()
     {
-
         Debug.Log("Vida actual: " + currentHealth);
+
         // Limpiar corazones antiguos
         foreach (Transform child in heartContainer)
         {
@@ -38,6 +37,9 @@ public class HealthUI : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
         UpdateHearts(); // Actualizar la UI cuando se toma daño
+
+        // Notificar al GameManager que se ha tomado daño
+        GameManager.Instance.lostLife();
     }
 
     // Método para curar al jugador
@@ -46,5 +48,11 @@ public class HealthUI : MonoBehaviour
         currentHealth += healAmount;
         if (currentHealth > maxHealth) currentHealth = maxHealth;
         UpdateHearts(); // Actualizar la UI cuando se cura
+    }
+
+    public void SetHealth(int health)
+    {
+        currentHealth = health;
+        UpdateHearts(); // Actualizar la UI de vida
     }
 }

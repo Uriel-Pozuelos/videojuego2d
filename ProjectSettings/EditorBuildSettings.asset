@@ -8,4 +8,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/nivel_test.unity
     guid: f212063027afe994da7d0409d3a146f0
+  - enabled: 1
+    path: Assets/Scenes/mapa_2.unity
+    guid: 9447ca95e16ecf84bbd50aa3f3f09c5f
+  - enabled: 1
+    path: Assets/Scenes/Winner.unity
+    guid: 04a07f78d22f72947aebb2e3440b7575
+  - enabled: 1
+    path: Assets/Scenes/Pause.unity
+    guid: 48964b5e5a89e0f44abbe2d05790310f
+  - enabled: 1
+    path: Assets/Scenes/Inicio.unity
+    guid: 6f2649b9f2bc9724e95864d0b72c683f
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 5ba4e74ccd1e82449bd81404f576049a
+  - enabled: 1
+    path: Assets/Scenes/Instrucciones.unity
+    guid: b70f2f9245b03e8428d7db7d88521524
   m_configObjects: {}
