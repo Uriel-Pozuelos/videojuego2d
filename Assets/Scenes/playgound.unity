@@ -872,7 +872,7 @@ PrefabInstance:
     - target: {fileID: 4513892248151418185, guid: bde3dbe203b6f2e41967de1859e11609, type: 3}
       propertyPath: onShoot
       value: 
-      objectReference: {fileID: 8300000, guid: d5212ca22336b384abab402efe12f4c5, type: 3}
+      objectReference: {fileID: 8300000, guid: 7d8c5435724215143a5118a482d8e73a, type: 3}
     - target: {fileID: 4513892248151418185, guid: bde3dbe203b6f2e41967de1859e11609, type: 3}
       propertyPath: nextScene
       value: playgound
@@ -880,7 +880,7 @@ PrefabInstance:
     - target: {fileID: 4513892248151418185, guid: bde3dbe203b6f2e41967de1859e11609, type: 3}
       propertyPath: onWinSound
       value: 
-      objectReference: {fileID: 8300000, guid: d5212ca22336b384abab402efe12f4c5, type: 3}
+      objectReference: {fileID: 8300000, guid: b206d255609b8c74aa19c799fb988bd1, type: 3}
     - target: {fileID: 4513892248151418185, guid: bde3dbe203b6f2e41967de1859e11609, type: 3}
       propertyPath: sceneSound
       value: 
@@ -900,19 +900,19 @@ PrefabInstance:
     - target: {fileID: 4513892248151418185, guid: bde3dbe203b6f2e41967de1859e11609, type: 3}
       propertyPath: onJumpSound
       value: 
-      objectReference: {fileID: 8300000, guid: a7f6a1296671ef44d8d631b1a374f637, type: 3}
+      objectReference: {fileID: 8300000, guid: f111b66d11f6fb44493b3e1388fa01c7, type: 3}
     - target: {fileID: 4513892248151418185, guid: bde3dbe203b6f2e41967de1859e11609, type: 3}
       propertyPath: onKillEnemy
       value: 
-      objectReference: {fileID: 8300000, guid: d5212ca22336b384abab402efe12f4c5, type: 3}
+      objectReference: {fileID: 8300000, guid: 3a969b427f8837e489605fb43956c362, type: 3}
     - target: {fileID: 4513892248151418185, guid: bde3dbe203b6f2e41967de1859e11609, type: 3}
       propertyPath: onLoseSound
       value: 
-      objectReference: {fileID: 8300000, guid: f1fea37e561261a488fc79bf6b1a3c9f, type: 3}
+      objectReference: {fileID: 8300000, guid: a31f5ccf55564b34cb7fa0fab985ea69, type: 3}
     - target: {fileID: 4513892248151418185, guid: bde3dbe203b6f2e41967de1859e11609, type: 3}
       propertyPath: onHealthSound
       value: 
-      objectReference: {fileID: 8300000, guid: a7f6a1296671ef44d8d631b1a374f637, type: 3}
+      objectReference: {fileID: 8300000, guid: cb54494ab3fa6af4d862d1205e789b89, type: 3}
     - target: {fileID: 4513892248151418185, guid: bde3dbe203b6f2e41967de1859e11609, type: 3}
       propertyPath: onPressButton
       value: 
