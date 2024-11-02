@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
                 {
                     GameObject obj = new GameObject("GameManager");
                     instance = obj.AddComponent<GameManager>();
-
                 }
             }
             return instance;
@@ -33,16 +32,12 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Stats")]
     public HUB hub;
-    public string startScene;
-    public string nextScene;
-
     public int TotalCoins = 0; // Cambiado a público
 
     [Header("Game Mechanics")]
     public bool canNextLevel = false; // Indica si el jugador puede avanzar al siguiente nivel
 
     [Header("Audio Clips")]
-    public AudioClip sceneSound;
     public AudioClip onDeadSound;
     public AudioClip onCoinSound;
     public AudioClip onWinSound;
@@ -61,8 +56,7 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
             audioSource = gameObject.AddComponent<AudioSource>();
-            canNextLevel = false;
-            AssignHub();
+            StartCoroutine(AssignHub()); // Iniciar corrutina para asignar el HUB
         }
         else if (instance != this)
         {
@@ -70,6 +64,57 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        StartCoroutine(AssignHub()); // Iniciar corrutina al cargar una escena
+        ResetLevelSettings(); // Restablece las configuraciones del nivel
+        if (hub != null)
+        {
+            hub.RestLife(Life); // Actualizar la UI de vida en el HUB
+        }
+    }
+
+    private void Start()
+    {
+       
+    }
+
+    // Corrutina para esperar y asignar el HUB
+    private IEnumerator AssignHub()
+    {
+        yield return new WaitForSeconds(0.1f); // Espera breve para dar tiempo a que el HUB se cargue
+        hub = FindObjectOfType<HUB>();
+        if (hub == null)
+        {
+            Debug.LogWarning("Hub no asignado en GameManager");
+        }
+    }
+
+    // Método para restablecer las configuraciones específicas del nivel
+    private void ResetLevelSettings()
+    {
+        Life = TotalLife; // Vida máxima para el nivel actual
+        bullets = 5; // Restablecer balas al máximo
+        TotalCoins = 0; // Reiniciar monedas para el nivel
+        canNextLevel = false; // Reiniciar permiso de avance de nivel
+        // Actualizar la UI del HUD
+        if (hub != null)
+        {
+            hub.UpdateCoins(TotalCoins);
+            hub.RestBullet(bullets);
+            hub.RestLife(Life);
+        }
+    }
 
     public void OnkillEnemy()
     {
@@ -86,50 +131,13 @@ public class GameManager : MonoBehaviour
         audioSource.PlayOneShot(onShoot);
     }
 
-    private void OnEnable()
+    public void AddCoins()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        AssignHub();
-        // Reiniciar la vida del jugador al cargar la escena
-        Life = TotalLife;
-        if (hub != null)
-        {
-            hub.RestLife(Life); // Actualizar la UI de vida en el HUB
-        }
-    }
-
-    private void Start()
-    {
-        PlaySceneSound();
-    }
-
-    private void AssignHub()
-    {
-        if (hub == null)
-        {
-            hub = FindObjectOfType<HUB>();
-            if (hub == null)
-            {
-                Debug.LogWarning("Hub no asignado en GameManager");
-            }
-        }
-    }
-
-    public void AddCoins(int coins)
-    {
-        TotalCoins += coins; // Actualizado para usar la variable pública
+        TotalCoins += 1;
         audioSource.PlayOneShot(onCoinSound);
-        //cada dos monedas se añande una bala si no se tiene el maximo
-        if (TotalCoins % 2 == 0 && bullets < 5)
+
+
+        if(TotalCoins % 3 == 0 && bullets < 5)
         {
             addBullet();
         }
@@ -137,7 +145,7 @@ public class GameManager : MonoBehaviour
 
         if (hub != null)
         {
-            hub.UpdateCoins(TotalCoins); // Usar TotalCoins aquí
+            hub.UpdateCoins(TotalCoins);
         }
         Debug.Log("Total coins: " + TotalCoins);
     }
@@ -146,26 +154,25 @@ public class GameManager : MonoBehaviour
     {
         if (Life > 0)
         {
-            Life -= 1; // Reducir vida
+            Life -= 1;
             if (hub != null)
             {
-                hub.RestLife(Life); // Actualizar la UI de vida en el HUB
+                hub.RestLife(Life);
             }
             PlayOnDeadSound();
 
             if (Life <= 0)
             {
                 Debug.Log("Game Over");
-                SceneManager.LoadScene(startScene); // Recargar escena de inicio
+                audioSource.PlayOneShot(onLoseSound);
+                SceneManager.LoadScene("GameOver");
             }
         }
     }
 
-
-
-     public void lessBullet()
+    public void lessBullet()
     {
-        if(bullets > 0)
+        if (bullets > 0)
         {
             bullets -= 1;
             if (hub != null)
@@ -187,7 +194,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     public void killPlayer()
     {
         Life = 0;
@@ -199,7 +205,7 @@ public class GameManager : MonoBehaviour
         if (Life <= 0)
         {
             Debug.Log("Game Over");
-            SceneManager.LoadScene(startScene);
+            SceneManager.LoadScene("GameOver");
         }
     }
 
@@ -211,12 +217,12 @@ public class GameManager : MonoBehaviour
             audioSource.PlayOneShot(onHealthSound);
             if (hub != null)
             {
-                hub.AddLife(Life - 1); // Asegurarse de que el índice sea el correcto
+                hub.AddLife(Life - 1);
             }
         }
     }
 
-    public void OnWinLevel()
+    public void OnWinLevel(string nextScene = null)
     {
         if (canNextLevel && !string.IsNullOrEmpty(nextScene))
         {
@@ -228,16 +234,6 @@ public class GameManager : MonoBehaviour
             Debug.Log("No se puede avanzar al siguiente nivel. Se requiere una llave.");
         }
     }
-
-    private void PlaySceneSound()
-    {
-        if (sceneSound != null)
-        {
-            audioSource.clip = sceneSound;
-            audioSource.Play();
-        }
-    }
-
     private void PlayOnDeadSound()
     {
         if (onDeadSound != null)
@@ -249,6 +245,6 @@ public class GameManager : MonoBehaviour
     // Método para permitir avanzar al siguiente nivel
     public void AllowNextLevel()
     {
-        canNextLevel = true; // Cambia el valor a verdadero
+        canNextLevel = true;
     }
 }

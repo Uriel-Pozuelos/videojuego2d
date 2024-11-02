@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    [Header("Coin Settings")]
-    private int valueCoin = 1;
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            GameManager.Instance.AddCoins(valueCoin);
-            Destroy(gameObject);
+            // Desactivar el collider para evitar múltiples colisiones
+            GetComponent<Collider2D>().enabled = false;
+
+            // Desactivar la moneda visualmente
+            gameObject.SetActive(false);
+
+            // Agregar moneda en el GameManager
+            GameManager.Instance.AddCoins();
+
+            // Destruir el objeto después de un pequeño retraso
+            Destroy(gameObject, 0.1f);
         }
     }
+
+
 }

@@ -1,15 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UIInicio : MonoBehaviour
 {
-    // Start is called before the first frame update
-    [Header("Botones")]
-    public GameObject botonJugar;
-    public GameObject botonSalir;
-    public GameObject botonInstrucciones;
+    public string restart;
 
 
     public void Jugar() {
@@ -26,14 +23,23 @@ public class UIInicio : MonoBehaviour
         SceneManager.LoadScene("Instrucciones");
     }
 
-    void Start()
+    public void VolverMenu()
     {
-        
+        SceneManager.LoadScene("Inicio");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Reset()
     {
-        
+        SceneManager.LoadScene(restart);
     }
+    public void VolverInicio()
+    {
+        SceneManager.LoadScene("Inicio");
+    }
+
+    public void GamerOver()
+    {
+        SceneManager.LoadScene("GameOver");
+    }
+
 }

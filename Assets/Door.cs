@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+
+    public string nextLevelName; // Nombre del siguiente nivel
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         // Asumiendo que el jugador tiene un tag llamado "Player"
@@ -12,7 +15,7 @@ public class Door : MonoBehaviour
             // Comprobar si el jugador puede avanzar al siguiente nivel
             if (GameManager.Instance.canNextLevel)
             {
-                GameManager.Instance.OnWinLevel(); // Intentar avanzar al siguiente nivel
+                GameManager.Instance.OnWinLevel(nextLevelName); // Intentar avanzar al siguiente nivel
             }
             else
             {
@@ -29,7 +32,7 @@ public class Door : MonoBehaviour
             // Comprobar si el jugador puede avanzar al siguiente nivel
             if (GameManager.Instance.canNextLevel)
             {
-                GameManager.Instance.OnWinLevel(); // Intentar avanzar al siguiente nivel
+                GameManager.Instance.OnWinLevel(nextLevelName); // Intentar avanzar al siguiente nivel
             }
             else
             {
