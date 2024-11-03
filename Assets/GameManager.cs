@@ -150,6 +150,10 @@ public class GameManager : MonoBehaviour
         Debug.Log("Total coins: " + TotalCoins);
     }
 
+
+    public void OnCoin() { 
+       audioSource.PlayOneShot(onCoinSound);
+    }
     public void lostLife()
     {
         if (Life > 0)

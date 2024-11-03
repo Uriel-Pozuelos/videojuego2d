@@ -11,6 +11,7 @@ public class Key : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("Has recogido la llave."); // Mensaje de aviso
+            GameManager.Instance.OnCoin(); // Añadir una moneda al contador
             GameManager.Instance.AllowNextLevel(); // Permitir avanzar al siguiente nivel
             Destroy(gameObject); // Destruir la llave después de recogerla
         }
@@ -23,6 +24,7 @@ public class Key : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Has recogido la llave."); // Mensaje de aviso
+            GameManager.Instance.OnCoin(); // Añadir una moneda al contador
             GameManager.Instance.AllowNextLevel(); // Permitir avanzar al siguiente nivel
             Destroy(gameObject); // Destruir la llave después de recogerla
         }

@@ -480,7 +480,7 @@ Transform:
   m_GameObject: {fileID: 50995541}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.17, y: -3.1699996, z: -10}
+  m_LocalPosition: {x: -15.42, y: -3.08, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -752,11 +752,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4972536767082130461, guid: f2f44ecf1337ca049b0479bef777e0a8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 157.36
+      value: 125.64
       objectReference: {fileID: 0}
     - target: {fileID: 4972536767082130461, guid: f2f44ecf1337ca049b0479bef777e0a8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 51.85
+      value: 37.37
       objectReference: {fileID: 0}
     - target: {fileID: 4972536767082130461, guid: f2f44ecf1337ca049b0479bef777e0a8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -55477,11 +55477,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 635731064929615518, guid: 5ba844b43eb4e034d8a82c8df126dd14, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.17
+      value: -15.42
       objectReference: {fileID: 0}
     - target: {fileID: 635731064929615518, guid: 5ba844b43eb4e034d8a82c8df126dd14, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.47
+      value: -4.38
       objectReference: {fileID: 0}
     - target: {fileID: 635731064929615518, guid: 5ba844b43eb4e034d8a82c8df126dd14, type: 3}
       propertyPath: m_LocalPosition.z
@@ -56911,7 +56911,7 @@ MonoBehaviour:
   onLoseSound: {fileID: 8300000, guid: a31f5ccf55564b34cb7fa0fab985ea69, type: 3}
   onJumpSound: {fileID: 8300000, guid: f111b66d11f6fb44493b3e1388fa01c7, type: 3}
   onHealthSound: {fileID: 8300000, guid: cb54494ab3fa6af4d862d1205e789b89, type: 3}
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 1080594889}
   onPressButton: {fileID: 8300000, guid: f1fea37e561261a488fc79bf6b1a3c9f, type: 3}
   onKillEnemy: {fileID: 8300000, guid: 3a969b427f8837e489605fb43956c362, type: 3}
   onShoot: {fileID: 8300000, guid: 7d8c5435724215143a5118a482d8e73a, type: 3}
@@ -58687,7 +58687,7 @@ Transform:
   m_GameObject: {fileID: 1892789028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.461295, y: -3.042397, z: -10}
+  m_LocalPosition: {x: -9.593307, y: -3.0453873, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
